@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MediaReturnMasViewDlg" widgetVar="MediaReturnMasViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewMediaReturnMasTitle}">
+            <h:form id="MediaReturnMasViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{mediaReturnMasController.selected != null}">
+                        <h:outputText value="#{bundle.ViewMediaReturnMasLabel_mreMasId}"/>
+                        <h:outputText value="#{mediaReturnMasController.selected.mreMasId}" title="#{bundle.ViewMediaReturnMasTitle_mreMasId}"/>
+                        <h:outputText value="#{bundle.ViewMediaReturnMasLabel_transDate}"/>
+                        <h:outputText value="#{mediaReturnMasController.selected.transDate}" title="#{bundle.ViewMediaReturnMasTitle_transDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewMediaReturnMasLabel_fine}"/>
+                        <h:outputText value="#{mediaReturnMasController.selected.fine}" title="#{bundle.ViewMediaReturnMasTitle_fine}"/>
+                        <h:outputText value="#{bundle.ViewMediaReturnMasLabel_crBy}"/>
+                        <h:outputText value="#{mediaReturnMasController.selected.crBy}" title="#{bundle.ViewMediaReturnMasTitle_crBy}"/>
+                        <h:outputText value="#{bundle.ViewMediaReturnMasLabel_returnBy}"/>
+                        <h:outputText value="#{mediaReturnMasController.selected.returnBy}" title="#{bundle.ViewMediaReturnMasTitle_returnBy}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="MediaReturnMasViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

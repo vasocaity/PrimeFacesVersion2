@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./template.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="top">
+        top
+    </ui:define>
+
+    <ui:define name="content">
+        #{TSA01RENTCtrl.init()}
+
+        <!-- form LV1 -->
+        <h:form id="form_LV1">
+            <p:dataTable value="#{TSA01RENTCtrl.itemLV1List}" var="item">
+                <p:column headerText="รหัส">
+                    #{item.mdrMasId}
+                </p:column>
+                <p:column headerText="วันที่ยืม">
+                    #{item.transDate}
+                </p:column>
+                <p:column headerText="ผู้ยืม">
+                    #{item.rentBy.prefix} #{item.rentBy.fname} #{item.rentBy.lname} 
+                </p:column>
+                <p:column headerText="ผู้บักทึก">
+                    #{item.crBy.prefix} #{item.crBy.fname} #{item.crBy.lname}
+                </p:column>
+                <p:column headerText="">
+                    <f:facet name ="header">    <!--want to add button in the head not the record (use facet)-->
+                        <p:commandButton value="เพิ่ม" action="#{TSA01RENTCtrl.prepareLv1Create()}" 
+                                         oncomplete="PF('LV1_dig').show()" 
+                                         update=":form_LV1,:msg"/>
+                    </f:facet>
+                    <p:commandButton value="แก้ไข" update=":form_LV1_dig,:msg" oncomplete="PF('LV1_dig').show()" >
+                        <f:setPropertyActionListener value="#{item}" target="#{TSA01RENTCtrl.selectedLV1One}"  />
+                    </p:commandButton>
+                    <p:commandButton value="ลบ" update=":form_LV1,:msg" oncomplete="" action="#{TSA01RENTCtrl.onDelete()}">
+                        <p:confirm header="ยืนยันข้อมูล" message="#{lb.confirmDeleteMsg}" />
+                        <f:setPropertyActionListener value="#{item}" target="#{TSA01RENTCtrl.selectedLV1One}" />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <!--....................... dialog LV1............................................. -->
+
+        <h:form id="form_LV1_dig">
+            <p:dialog header="บันทึกการยืม" modal="true" showEffect="fade" widgetVar="LV1_dig">
+                <p:panelGrid id="pg_LV1_dig">
+                    <p:row>
+                        <p:column>
+                            รหัส:
+                        </p:column>
+                        <p:column>
+                            <p:inputText value="#{TSA01RENTCtrl.selectedLV1One.mdrMasId}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+
+                        <p:column>
+                            วันที่ยืม:
+                        </p:column>
+                        <p:column>
+                            <p:calendar  value="#{TSA01RENTCtrl.selectedLV1One.transDate}" required="true"
+                                         requiredMessage="กรุณากรอกวันที่" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            ผู้ยืม:
+                        </p:column>
+                        <p:column>
+                            #{TSA01RENTCtrl.selectedLV1One.rentBy.prefix}
+                            #{TSA01RENTCtrl.selectedLV1One.rentBy.fname}
+                            #{TSA01RENTCtrl.selectedLV1One.rentBy.lname}
+                            <p:commandButton value="เลือกผู้ยืม" oncomplete="PF('rentby_dig').show()"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            ผู้บันทึก:
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu value="#{TSA01RENTCtrl.selectedLV1One.crBy}">
+                                <f:selectItem itemValue="#{null}" itemLabel="---" noSelectionOption="true" />
+                                <f:selectItems value="#{TSA01RENTCtrl.itemCrByList}" var="crBy"   itemLabel="#{crBy.prefix}#{crBy.fname} #{crBy.lname}" />
+                                
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>
+                <p:separator>
+
+                    <p:commandButton value="ยืนยัน" action="#{TSA01RENTCtrl.onSaveLV1()}" 
+                                     oncomplete="handleSubmit(args, 'LV1_dig');" update="pg_LV1_dig,:form_LV1,:msg"
+                                     />
+                    <p:commandButton value="ยกเลิก" style="float: right" process="@none" onclick="PF('LV1_dig').hide()" />
+                </p:separator>
+            </p:dialog>
+        </h:form>
+        <!--....................... dialog Rent BY............................................. -->
+
+        <h:form id="form_rentby_dig">
+            <p:dialog header="บันทึกการยืม" modal="true" showEffect="fade" widgetVar="rentby_dig">
+                <p:dataTable value="#{TSA01RENTCtrl.itemRentByList}" var="item"
+                             selection="#{TSA01RENTCtrl.selectedLV1One.rentBy}" selectionMode="single"
+                             rowKey="#{item.userId}" rowIndexVar="idx">
+                    <p:column headerText="ลำดับ">
+                        #{idx+1}
+                    </p:column>
+                    <p:column headerText="รหัส">
+                        #{item.userId}
+                    </p:column>
+                    <p:column headerText="ชื่อ">
+                        #{item.prefix} #{item.fname}  #{item.lname}
+                    </p:column>
+
+                </p:dataTable>
+                <p:separator/>
+
+                    <p:commandButton value="ยืนยัน" oncomplete="PF('rentby_dig').hide()"
+                                     update=":form_LV1_dig:pg_LV1_dig,:msg"  />
+                    <p:commandButton value="ยกเลิก" style="float: right" process="@none" onclick="PF('rentby_dig').hide()" />
+            </p:dialog>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

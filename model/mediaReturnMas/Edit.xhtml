@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MediaReturnMasEditDlg" widgetVar="MediaReturnMasEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditMediaReturnMasTitle}">
+            <h:form id="MediaReturnMasEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{mediaReturnMasController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditMediaReturnMasLabel_mreMasId}" for="mreMasId" />
+                        <p:inputText id="mreMasId" value="#{mediaReturnMasController.selected.mreMasId}" title="#{bundle.EditMediaReturnMasTitle_mreMasId}" required="true" requiredMessage="#{bundle.EditMediaReturnMasRequiredMessage_mreMasId}"/>
+                        <p:outputLabel value="#{bundle.EditMediaReturnMasLabel_transDate}" for="transDate" />
+                        <p:calendar id="transDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{mediaReturnMasController.selected.transDate}" title="#{bundle.EditMediaReturnMasTitle_transDate}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditMediaReturnMasLabel_fine}" for="fine" />
+                        <p:inputText id="fine" value="#{mediaReturnMasController.selected.fine}" title="#{bundle.EditMediaReturnMasTitle_fine}" />
+                        <p:outputLabel value="#{bundle.EditMediaReturnMasLabel_crBy}" for="crBy" />
+                        <p:selectOneMenu id="crBy" value="#{mediaReturnMasController.selected.crBy}" required="true" requiredMessage="#{bundle.EditMediaReturnMasRequiredMessage_crBy}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{userController.itemsAvailableSelectOne}"
+                                           var="crByItem"
+                                           itemValue="#{crByItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditMediaReturnMasLabel_returnBy}" for="returnBy" />
+                        <p:selectOneMenu id="returnBy" value="#{mediaReturnMasController.selected.returnBy}" required="true" requiredMessage="#{bundle.EditMediaReturnMasRequiredMessage_returnBy}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{userController.itemsAvailableSelectOne}"
+                                           var="returnByItem"
+                                           itemValue="#{returnByItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{mediaReturnMasController.update}" value="#{bundle.Save}" update="display,:MediaReturnMasListForm:datalist,:growl" oncomplete="handleSubmit(args, 'MediaReturnMasEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="MediaReturnMasEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

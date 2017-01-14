@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./template.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="top">
+        top
+    </ui:define>
+
+    <ui:define name="content">
+        #{BDM02MEDCtrl.init()}
+
+        <!-- form LV1 -->
+        <h:form id="form_LV1">
+            <p:dataTable value="#{BDM02MEDCtrl.itemLV1List}" var="item"
+                          scrollHeight="150" scrollable="true">
+                <p:column headerText="รหัส" filterBy="#{item.mediaId}">
+                    #{item.mediaId}
+                </p:column>
+                <p:column headerText="ชื่อ">
+                    #{item.name}
+                </p:column>
+                <p:column headerText="ค่าปรับ">
+                    #{item.fine}
+                </p:column>
+                <p:column headerText="สถานะการใช้งาน">
+                    <p:selectBooleanCheckbox value="#{item.active}" />
+                </p:column>
+                <p:column headerText="">
+                    <f:facet name ="header">    <!--want to add button in the head not the record (use facet)-->
+                        <p:commandButton value="เพิ่ม" action="#{BDM02MEDCtrl.prepareLv1Create()}" 
+                                         oncomplete="PF('LV1_dig').show()" 
+                                         update=":form_LV1,:msg"/>
+                    </f:facet>
+                    <p:commandButton value="แก้ไข" update=":form_LV1_dig,:msg" oncomplete="PF('LV1_dig').show()" >
+                        <f:setPropertyActionListener value="#{item}" target="#{BDM02MEDCtrl.selectedLV1One}"  />
+                    </p:commandButton>
+                    <p:commandButton value="ลบ" update=":form_LV1,:msg" oncomplete="" action="#{BDM02MEDCtrl.onDelete()}">
+                        <f:setPropertyActionListener value="#{item}" target="#{BDM02MEDCtrl.selectedLV1One}" />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <!-- dialog LV1 -->
+
+        <h:form id="form_LV1_dig">
+            <p:dialog header="บันทึกผู้ใช้งาน" modal="true" showEffect="fade" widgetVar="LV1_dig">
+                <p:panelGrid id="pg_LV1_dig">
+                    <p:row>
+                        <p:column>
+                            รหัส:
+                        </p:column>
+                        <p:column>
+                            <p:inputText value="#{BDM02MEDCtrl.selectedLV1One.mediaId}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+
+                        <p:column>
+                            ชื่อ:
+                        </p:column>
+                        <p:column>
+                            <p:inputText value="#{BDM02MEDCtrl.selectedLV1One.name}" />
+                        </p:column>
+
+                        <p:column>
+                            สถานะ:
+                        </p:column>
+                        <p:column>
+                            <p:selectBooleanCheckbox value="#{BDM02MEDCtrl.selectedLV1One.active}" />
+                        </p:column>
+                        <p:column>
+                            ค่าปรับ:
+                        </p:column>
+                        <p:column>
+                            <p:inputText value="#{BDM02MEDCtrl.selectedLV1One.fine}" />
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <p:separator/>
+
+                <p:commandButton value="ยืนยัน" action="#{BDM02MEDCtrl.onSaveLV1()}" 
+                                 oncomplete="handleSubmit(args, 'LV1_dig');" update="pg_LV1_dig,:form_LV1,:msg"
+                                 />
+                <p:commandButton value="ยกเลิก" style="float: right" process="@none" onclick="PF('LV1_dig').hide()" />
+
+            </p:dialog>
+
+        </h:form>
+
+
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListMediaReturnMasTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="MediaReturnMasListForm">
+                <p:panel header="#{bundle.ListMediaReturnMasTitle}">
+                    <p:dataTable id="datalist" value="#{mediaReturnMasController.items}" var="item"
+                                 selectionMode="single" selection="#{mediaReturnMasController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.mreMasId}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMediaReturnMasTitle_mreMasId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.mreMasId}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMediaReturnMasTitle_transDate}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.transDate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMediaReturnMasTitle_fine}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fine}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMediaReturnMasTitle_crBy}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.crBy}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMediaReturnMasTitle_returnBy}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.returnBy}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{mediaReturnMasController.prepareCreate}" update=":MediaReturnMasCreateForm" oncomplete="PF('MediaReturnMasCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":MediaReturnMasViewForm" oncomplete="PF('MediaReturnMasViewDialog').show()" disabled="#{empty mediaReturnMasController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":MediaReturnMasEditForm" oncomplete="PF('MediaReturnMasEditDialog').show()" disabled="#{empty mediaReturnMasController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{mediaReturnMasController.destroy}" update=":growl,datalist" disabled="#{empty mediaReturnMasController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

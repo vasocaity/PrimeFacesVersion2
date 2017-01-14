@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MediaEditDlg" widgetVar="MediaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditMediaTitle}">
+            <h:form id="MediaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{mediaController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditMediaLabel_mediaId}" for="mediaId" />
+                        <p:inputText id="mediaId" value="#{mediaController.selected.mediaId}" title="#{bundle.EditMediaTitle_mediaId}" required="true" requiredMessage="#{bundle.EditMediaRequiredMessage_mediaId}"/>
+                        <p:outputLabel value="#{bundle.EditMediaLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{mediaController.selected.name}" title="#{bundle.EditMediaTitle_name}" />
+                        <p:outputLabel value="#{bundle.EditMediaLabel_isbn}" for="isbn" />
+                        <p:inputText id="isbn" value="#{mediaController.selected.isbn}" title="#{bundle.EditMediaTitle_isbn}" />
+                        <p:outputLabel value="#{bundle.EditMediaLabel_fine}" for="fine" />
+                        <p:inputText id="fine" value="#{mediaController.selected.fine}" title="#{bundle.EditMediaTitle_fine}" />
+                        <p:outputLabel value="#{bundle.EditMediaLabel_fineDay}" for="fineDay" />
+                        <p:inputText id="fineDay" value="#{mediaController.selected.fineDay}" title="#{bundle.EditMediaTitle_fineDay}" />
+                        <p:outputLabel value="#{bundle.EditMediaLabel_author}" for="author" />
+                        <p:inputText id="author" value="#{mediaController.selected.author}" title="#{bundle.EditMediaTitle_author}" />
+                        <p:outputLabel value="#{bundle.EditMediaLabel_active}" for="active" />
+                        <p:selectBooleanCheckbox id="active" value="#{mediaController.selected.active}" />
+                        <p:outputLabel value="#{bundle.EditMediaLabel_avaliable}" for="avaliable" />
+                        <p:selectBooleanCheckbox id="avaliable" value="#{mediaController.selected.avaliable}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{mediaController.update}" value="#{bundle.Save}" update="display,:MediaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'MediaEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="MediaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

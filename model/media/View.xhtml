@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MediaViewDlg" widgetVar="MediaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewMediaTitle}">
+            <h:form id="MediaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{mediaController.selected != null}">
+                        <h:outputText value="#{bundle.ViewMediaLabel_mediaId}"/>
+                        <h:outputText value="#{mediaController.selected.mediaId}" title="#{bundle.ViewMediaTitle_mediaId}"/>
+                        <h:outputText value="#{bundle.ViewMediaLabel_name}"/>
+                        <h:outputText value="#{mediaController.selected.name}" title="#{bundle.ViewMediaTitle_name}"/>
+                        <h:outputText value="#{bundle.ViewMediaLabel_isbn}"/>
+                        <h:outputText value="#{mediaController.selected.isbn}" title="#{bundle.ViewMediaTitle_isbn}"/>
+                        <h:outputText value="#{bundle.ViewMediaLabel_fine}"/>
+                        <h:outputText value="#{mediaController.selected.fine}" title="#{bundle.ViewMediaTitle_fine}"/>
+                        <h:outputText value="#{bundle.ViewMediaLabel_fineDay}"/>
+                        <h:outputText value="#{mediaController.selected.fineDay}" title="#{bundle.ViewMediaTitle_fineDay}"/>
+                        <h:outputText value="#{bundle.ViewMediaLabel_author}"/>
+                        <h:outputText value="#{mediaController.selected.author}" title="#{bundle.ViewMediaTitle_author}"/>
+                        <h:outputText value="#{bundle.ViewMediaLabel_active}"/>
+                        <p:selectBooleanCheckbox value="#{mediaController.selected.active}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewMediaLabel_avaliable}"/>
+                        <p:selectBooleanCheckbox value="#{mediaController.selected.avaliable}" disabled="true"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="MediaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

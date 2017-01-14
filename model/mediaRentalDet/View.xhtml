@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MediaRentalDetViewDlg" widgetVar="MediaRentalDetViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewMediaRentalDetTitle}">
+            <h:form id="MediaRentalDetViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{mediaRentalDetController.selected != null}">
+                        <h:outputText value="#{bundle.ViewMediaRentalDetLabel_mdrDetId}"/>
+                        <h:outputText value="#{mediaRentalDetController.selected.mdrDetId}" title="#{bundle.ViewMediaRentalDetTitle_mdrDetId}"/>
+                        <h:outputText value="#{bundle.ViewMediaRentalDetLabel_fineDay}"/>
+                        <h:outputText value="#{mediaRentalDetController.selected.fineDay}" title="#{bundle.ViewMediaRentalDetTitle_fineDay}"/>
+                        <h:outputText value="#{bundle.ViewMediaRentalDetLabel_fineRate}"/>
+                        <h:outputText value="#{mediaRentalDetController.selected.fineRate}" title="#{bundle.ViewMediaRentalDetTitle_fineRate}"/>
+                        <h:outputText value="#{bundle.ViewMediaRentalDetLabel_fine}"/>
+                        <h:outputText value="#{mediaRentalDetController.selected.fine}" title="#{bundle.ViewMediaRentalDetTitle_fine}"/>
+                        <h:outputText value="#{bundle.ViewMediaRentalDetLabel_mediaId}"/>
+                        <h:outputText value="#{mediaRentalDetController.selected.mediaId}" title="#{bundle.ViewMediaRentalDetTitle_mediaId}"/>
+                        <h:outputText value="#{bundle.ViewMediaRentalDetLabel_mdrMasId}"/>
+                        <h:outputText value="#{mediaRentalDetController.selected.mdrMasId}" title="#{bundle.ViewMediaRentalDetTitle_mdrMasId}"/>
+                        <h:outputText value="#{bundle.ViewMediaRentalDetLabel_mreMasId}"/>
+                        <h:outputText value="#{mediaRentalDetController.selected.mreMasId}" title="#{bundle.ViewMediaRentalDetTitle_mreMasId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="MediaRentalDetViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

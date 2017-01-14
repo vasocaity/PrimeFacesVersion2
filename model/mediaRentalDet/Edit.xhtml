@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MediaRentalDetEditDlg" widgetVar="MediaRentalDetEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditMediaRentalDetTitle}">
+            <h:form id="MediaRentalDetEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{mediaRentalDetController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditMediaRentalDetLabel_mdrDetId}" for="mdrDetId" />
+                        <p:inputText id="mdrDetId" value="#{mediaRentalDetController.selected.mdrDetId}" title="#{bundle.EditMediaRentalDetTitle_mdrDetId}" required="true" requiredMessage="#{bundle.EditMediaRentalDetRequiredMessage_mdrDetId}"/>
+                        <p:outputLabel value="#{bundle.EditMediaRentalDetLabel_fineDay}" for="fineDay" />
+                        <p:inputText id="fineDay" value="#{mediaRentalDetController.selected.fineDay}" title="#{bundle.EditMediaRentalDetTitle_fineDay}" />
+                        <p:outputLabel value="#{bundle.EditMediaRentalDetLabel_fineRate}" for="fineRate" />
+                        <p:inputText id="fineRate" value="#{mediaRentalDetController.selected.fineRate}" title="#{bundle.EditMediaRentalDetTitle_fineRate}" />
+                        <p:outputLabel value="#{bundle.EditMediaRentalDetLabel_fine}" for="fine" />
+                        <p:inputText id="fine" value="#{mediaRentalDetController.selected.fine}" title="#{bundle.EditMediaRentalDetTitle_fine}" />
+                        <p:outputLabel value="#{bundle.EditMediaRentalDetLabel_mediaId}" for="mediaId" />
+                        <p:selectOneMenu id="mediaId" value="#{mediaRentalDetController.selected.mediaId}" required="true" requiredMessage="#{bundle.EditMediaRentalDetRequiredMessage_mediaId}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{mediaController.itemsAvailableSelectOne}"
+                                           var="mediaIdItem"
+                                           itemValue="#{mediaIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditMediaRentalDetLabel_mdrMasId}" for="mdrMasId" />
+                        <p:selectOneMenu id="mdrMasId" value="#{mediaRentalDetController.selected.mdrMasId}" required="true" requiredMessage="#{bundle.EditMediaRentalDetRequiredMessage_mdrMasId}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{mediaRentalMasController.itemsAvailableSelectOne}"
+                                           var="mdrMasIdItem"
+                                           itemValue="#{mdrMasIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditMediaRentalDetLabel_mreMasId}" for="mreMasId" />
+                        <p:selectOneMenu id="mreMasId" value="#{mediaRentalDetController.selected.mreMasId}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{mediaReturnMasController.itemsAvailableSelectOne}"
+                                           var="mreMasIdItem"
+                                           itemValue="#{mreMasIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{mediaRentalDetController.update}" value="#{bundle.Save}" update="display,:MediaRentalDetListForm:datalist,:growl" oncomplete="handleSubmit(args, 'MediaRentalDetEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="MediaRentalDetEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

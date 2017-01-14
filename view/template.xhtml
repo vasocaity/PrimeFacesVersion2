@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <script src="../resources/js/jsfcrud.js" type="text/javascript"></script>
+        <title>Facelets Template</title>
+    </h:head>
+
+    <h:body>
+
+        <div id="top" class="top">
+            <p:growl id="msg" showDetail="true" sticky="false" life="1000"/>
+            <h:form>
+                <p:menubar>
+                    <p:menuitem action="main" value="Home"></p:menuitem>
+
+                    <p:submenu label="program">
+                        <p:menuitem action="BDM-01-USR?faces-redirect=true" value="บันทึกผู้ใช้งาน"></p:menuitem>
+                        <p:menuitem action="BDM-02-MED?faces-redirect=true" value="บันทึกสื่อการสอน"/>
+                        <p:menuitem action="TSA-01-RENT?faces-redirect=true" value="บันทึกการยืม"/>
+                    </p:submenu>
+                    <p:submenu label="report">
+                        <p:menuitem action="xxx" value="รายยงาน"></p:menuitem>
+                    </p:submenu>                   
+                </p:menubar>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="ใช่" type="button"  styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update=":msg" />
+                    <p:commandButton value="ไม่" type="button"  styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+            </h:form>
+
+            <ui:insert name="top"></ui:insert>
+        </div>
+
+
+
+
+
+        <div id="content" class="center_content">
+            <ui:insert name="content">
+
+            </ui:insert>
+        </div>
+
+    </h:body>
+
+</html>

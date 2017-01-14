@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MediaRentalMasViewDlg" widgetVar="MediaRentalMasViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewMediaRentalMasTitle}">
+            <h:form id="MediaRentalMasViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{mediaRentalMasController.selected != null}">
+                        <h:outputText value="#{bundle.ViewMediaRentalMasLabel_mdrMasId}"/>
+                        <h:outputText value="#{mediaRentalMasController.selected.mdrMasId}" title="#{bundle.ViewMediaRentalMasTitle_mdrMasId}"/>
+                        <h:outputText value="#{bundle.ViewMediaRentalMasLabel_transDate}"/>
+                        <h:outputText value="#{mediaRentalMasController.selected.transDate}" title="#{bundle.ViewMediaRentalMasTitle_transDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewMediaRentalMasLabel_crBy}"/>
+                        <h:outputText value="#{mediaRentalMasController.selected.crBy}" title="#{bundle.ViewMediaRentalMasTitle_crBy}"/>
+                        <h:outputText value="#{bundle.ViewMediaRentalMasLabel_rentBy}"/>
+                        <h:outputText value="#{mediaRentalMasController.selected.rentBy}" title="#{bundle.ViewMediaRentalMasTitle_rentBy}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="MediaRentalMasViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
